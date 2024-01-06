@@ -6,32 +6,114 @@
   <script id="challenge">
     // 👉 CHALLENGE 1
     function profileActivation(profile, reason) {
-
+      let result;
+      if (profile.active) {
+        if (reason === undefined) {
+        result = 'confirm status manually';
+      } else {
+        result = { active: false, reason: reason };
+      }  
+    } else {
+       result = { active: true };
     }
+
+    return result;
+  }
+     
+    
+      
+    
+      
+    
+    
 
     // 👉 CHALLENGE 2
     function mineSweeper(grid, x, y) {
+      let result;
+      if (x < 1 || x > 3 || y < 1 || y > 3) {
+        result = "invalid coordinates"
+      } else {
+      const cellValue = grid[y -1][x - 1];
 
+      if (cellValue === "🟥") {
+      result = "🟥 💀"
+     } else if (cellValue === "🟦") {
+      result = "🟦 🥳"
+     }
+    }
+     return result;
     }
 
     // 👉 CHALLENGE 3
     function booleanize(obj) {
-
+      for (let key in obj) {
+      if (obj.hasOwnProperty(key)) {
+        if (key.length > 9) {
+          return "shorten all prop names to 9 chars or less";
+        }
+      }
+      if (obj[key] === null) {
+        delete obj[key];
+      } else if (obj[key] === 0) {
+        obj[key] = false;
+      } else if (obj[key] === 1) {
+        obj[key] = true;
+      }
+    }
+         return obj;
     }
 
     // 👉 CHALLENGE 4
     function scrub(text, forbidden) {
+      if (!text || forbidden.length === 0) {
+        return text;
+      }
+      let words = text.split(/\s+/);
+      let resultWords = [];
 
+      for (let i = 0; i < words.length; i++) {
+        let currentWord = words[i].replace(/[.,\/#!$%\*;:{}=\-_`~()]/g, '');
+        let index = forbidden.indexOf(currentWord.toLowerCase());
+        if (index !== -1) {
+          resultWords.push("x".repeat(currentWord.length));
+        } else {
+          resultWords.push(words[i]);
+        }
+      }
+          return resultWords.join(' ');
     }
 
     // 👉 CHALLENGE 5 (bonus, NOT graded)
     function normalizePhoneNumber(num) {
-
+      if (num.length !== 10 || !/^\d+$/.test(num)) {
+        throw new Error("Invalid phone number format. Please provide exactly 10 digits.");
+      }
+      let formattedNumber = "(XXX) XXX-XXXX";
+      let xIndex = formattedNumber.indexOf('X');
+      for (let i = 0; i < num.length; i++) {
+        formattedNumber = formattedNumber.substring(0, xIndex) + num[i] + formattedNumber.substring(xIndex + 1);
+        xIndex = formattedNumber.indexOf('X', xIndex + 1);
+      }
+        return formattedNumber;
     }
 
     // 👉 CHALLENGE 6 (bonus, NOT graded)
     function diceRolls() {
-
+      let throws = 0;
+      let counter = 0;
+      while (true) {
+        const roll = Math.floor(Math.random() * 6) + 1;
+        throws++;
+        if (roll === 6) {
+          counter++;
+          if (counter === 3) {
+            break;
+          }
+        } else {
+          counter = 0;
+        }
+      }
+        return throws;
     }
 
     // 🧪 DO NOT make any changes below this line ===================
